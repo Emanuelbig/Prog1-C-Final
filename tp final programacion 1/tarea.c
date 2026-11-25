@@ -8,10 +8,10 @@
 //   buscarPorDescripcion y generarCodigoUnico
 // No modificar el resto del archivo.
 //
-// Apellido y nombre:
+// Apellido y nombre: Emanuel Morano Solé
 //
 
-#include "../../../utiles.h"
+#include "utiles.h"
 
 #define MAX_DESC        30
 #define NO_ENCONTRADO   -1
@@ -183,8 +183,8 @@ FILE *abrirArchivo(const char *nombreArchivo)
 // Acceso directo: salta 'posicion' registros desde el inicio
 int leerRegistro(FILE *arch, long posicion, Producto *prod)
 {
-    fseek(arch, posicion * (long)sizeof(Producto), SEEK_SET);
-    return fread(prod, sizeof(Producto), 1, arch) == 1;
+    fseek(arch, posicion * (long)sizeof(Producto), SEEK_SET); //saltamos a esa posicion
+    return fread(prod, sizeof(Producto), 1, arch) == 1; //lee 1 producto
 }
 
 // Gemela de leerRegistro: misma posición, pero escribe
@@ -260,12 +260,12 @@ int darDeBaja(FILE *arch, long posicion)
     Producto prod;
     int ok = 0;
 
-    if (leerRegistro(arch, posicion, &prod))
+    if (leerRegistro(arch, posicion, &prod)) // leo el producto
     {
-        prod.activo = DADO_DE_BAJA;
-        ok = escribirRegistro(arch, posicion, prod);
+        prod.activo = DADO_DE_BAJA; // cambio un campo en memoria
+        ok = escribirRegistro(arch, posicion, prod); //lo escribo en el mismo lugar
     }
-    return ok;
+    return ok; // 1 salio bien, 0 salio mal
 }
 
 // Baja física: copia los activos a un temporal, borra el original y renombra.
@@ -312,14 +312,20 @@ long compactarArchivo(const char *nombreArchivo, const char *nombreTemp)
 // TODO 1 - MODIFICAR PRECIO
 // Cambia el precio del producto que está en 'posicion' por 'nuevoPrecio'.
 // Devuelve 1 si pudo reescribir el registro, 0 si no.
+
+// leer - cambiar - escribir
+/*leo el registro completo , le cambio solo el precio y lo vuelvo a escribir en la misma posicion*/
 int modificarPrecio(FILE *arch, long posicion, float nuevoPrecio)
 {
-    int modificado = 0;
+    Producto prod; //el struct
+    int modificado = 0; // 1 es ok, si falla queda en 0 y no afecta ada
 
-    // eliminar estas tres líneas al implementar la función
-    (void)arch;
-    (void)posicion;
-    (void)nuevoPrecio;
+    /*le paso la direccion del struct por que voy a tener que modificar una de sus varibles y guardarla*/
+    if (leerRegistro(arch, posicion, &prod)) //leer registro era un fread
+    {
+        prod.precio = nuevoPrecio; //el cambio es solo en memoria
+        modificado = escribirRegistro(arch,posicion,prod); //este hace fseek en la misma posicion
+    }
 
     return modificado;
 }

@@ -12,7 +12,8 @@
 Leyenda: ⬜ sin empezar · 🟡 en curso · ✔ hecha y probada · 🎤 sabe explicarla
 
 ## Pendientes
-- Decidir cómo compilar por el include `../../../utiles.h` (ver 02).
+- ✔ Include resuelto (23/11): Emanuel movió tarea.c + utiles.h a `Prog1-C-Final\tp final programacion 1\` y puso `#include "utiles.h"`. Compila sin warnings. **Antes de entregar: preguntarle al profe si deja así o vuelve a `../../../utiles.h`.**
+- No leyó los pptx. Plan acordado: aprender con el código, pptx solo la diapositiva puntual. Orden: TODO 1 → 2 → 4 → 5 → 3 → ensayo oral.
 
 ## Preguntas probables del oral (ir sumando)
 - ¿Por qué baja lógica y no física?
@@ -23,3 +24,4 @@ Leyenda: ⬜ sin empezar · 🟡 en curso · ✔ hecha y probada · 🎤 sabe ex
 ## Sesiones
 - 19/11/2026: se leyó todo el material y se armó este cerebro. Siguiente: Emanuel lee pptx Binarios y arrancamos TODO 1.
 - 23/11/2026: notas movidas de `Programacion 1\_cerebro_final_prog1\` a `FINAL PROG 1 2026 DICIEMBRE\other\`.
+- 23/11/2026 (tarde): include resuelto. Clase 0: archivo como vector de structs + leerRegistro/escribirRegistro + darDeBaja. Siguiente: él escribe TODO 1.
