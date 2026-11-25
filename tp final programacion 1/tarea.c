@@ -335,8 +335,14 @@ int modificarPrecio(FILE *arch, long posicion, float nuevoPrecio)
 // Devuelve 1 si pudo reescribir el registro, 0 si no.
 int reactivarProducto(FILE *arch, long posicion)
 {
+    Producto prod; //el struct
     int reactivado = 0;
 
+    if (leerRegistro(arch, posicion, &prod)) //leer registro era un fread
+    {
+        prod.activo = ACTIVO; //el cambio es solo en memoria
+        reactivado = escribirRegistro(arch,posicion,prod); //este hace fseek en la misma posicion
+    }
     // eliminar estas dos líneas al implementar la función
     (void)arch;
     (void)posicion;
