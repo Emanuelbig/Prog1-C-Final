@@ -343,9 +343,6 @@ int reactivarProducto(FILE *arch, long posicion)
         prod.activo = ACTIVO; //el cambio es solo en memoria
         reactivado = escribirRegistro(arch,posicion,prod); //este hace fseek en la misma posicion
     }
-    // eliminar estas dos líneas al implementar la función
-    (void)arch;
-    (void)posicion;
 
     return reactivado;
 }
@@ -356,12 +353,40 @@ int reactivarProducto(FILE *arch, long posicion)
 // Devuelve cuántos productos exportó, o ERROR_ARCHIVO si no pudo crear el archivo.
 long exportarStockBajo(FILE *arch, const char *nombreTxt, int stockMinimo)
 {
+    /*
+    Los pasos
+        Abrir el .txt para escribir, desde cero en cada exportación.
+        Verificar que se abrió. Si se abrió, exportados pasa de -1 a 0.
+        Volver al principio del binario. Ya está abierto y el cursor quedó donde lo dejó la última operación.
+        Recorrer con lectura adelantada, igual que en listarProductos.
+        Filtrar con dos condiciones juntas: vigente y stock menor al mínimo.
+        Escribir la línea y contar.
+        Cerrar el .txt y nada más.
+    */
+    FILE *txt;
+    Producto prod;
+    size_t leidos; // por que llamo a esta variable? no es lo mismo escribir size_t y ya 
     long exportados = ERROR_ARCHIVO;
 
-    // eliminar estas tres líneas al implementar la función
-    (void)arch;
-    (void)nombreTxt;
-    (void)stockMinimo;
+    txt = fopen(nombreTxt, "w");
+
+    if(txt != NULL)
+    {
+        exportados = 0;
+        rewind(arch);                                      // cursor al principio
+        leidos = fread(&prod, sizeof(Producto), 1, arch);  // leo el primero
+        while (leidos == 1)                                // mientras haya leído uno
+        {
+            if (prod.activo && prod.stock < stockMinimo )
+            {
+                fprintf(txt, "%d;%s;%d\n", prod.codigo,
+                        prod.descripcion, prod.stock);          // 9
+                exportados++;    
+            }                               // ¿vigente?
+            leidos = fread(&prod, sizeof(Producto), 1, arch);  // leo el siguiente
+        }
+        fclose(txt);
+    }
 
     return exportados;
 }
