@@ -15,9 +15,9 @@ Struct `Producto { int codigo; char descripcion[30]; float precio; int stock; in
 - `compactarArchivo`: copia activos a temporal, remove + rename. Muestra cómo abrir/cerrar un 2º archivo (útil para TODO 3).
 
 ## utiles.h (lo que piden usar)
-- `sonIguales(char*, char*)` → strcmp == 0. ⚠️ recibe `char*` y el TODO 4 tiene `const char*` (puede dar warning).
+- `sonIguales(char*, char*)` → strcmp == 0. ⚠️ recibe `char*` y el TODO 4 tiene `const char*` (da warning, pero compila).
 - `generarNumAleatorio(min, max)` → min + rand() % (max-min+1). `srand` ya está en main.
 - También: leerCadena, leerFlotante, pedirEnteroRango, limpiaPantalla, linea.
 
 ## Compilar
-tarea.c hace `#include "../../../utiles.h"` → busca `C:\Users\emanu\Documents\utiles.h` (NO existe). No modificar el include (regla). Opción: copiar utiles.h a esa ruta, o compilar desde una carpeta tres niveles más abajo. Pendiente decidir con Emanuel.
+tarea.c hace `#include "utiles.h"` (misma carpeta). Con gcc, parado en `tp final programacion 1\`: `gcc -Wall -Wextra tarea.c -o tarea.exe`. Para probar sin tocar `productos.dat`, ejecutarlo desde otra carpeta: los archivos se crean donde se lo ejecuta.
