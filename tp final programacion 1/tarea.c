@@ -398,13 +398,32 @@ long exportarStockBajo(FILE *arch, const char *nombreTxt, int stockMinimo)
 // Devuelve la posición del registro encontrado, o NO_ENCONTRADO si no existe.
 long buscarPorDescripcion(FILE *arch, const char *descripcionBuscada)
 {
-    long posicion = NO_ENCONTRADO;
+    Producto prod;
+    long posicion = 0;
+    long encontrado = NO_ENCONTRADO;
+    size_t leidos;
 
-    // eliminar estas dos líneas al implementar la función
-    (void)arch;
-    (void)descripcionBuscada;
+    rewind(arch);//vamos al principio del archivo
 
-    return posicion;
+    /*leeamos desde donde esta el struct prod, le decimos que queremos leer el tamaño del struct producto (osea entero), 1 sola vez desde el archivo arch*/
+    // y hacemos que sea igual a leidos = 1
+    leidos = fread(&prod, sizeof(Producto),1, arch);
+
+    while (leidos == 1 && encontrado == NO_ENCONTRADO)
+    {
+        if (sonIguales(prod.descripcion,descripcionBuscada) && prod.activo)
+        {
+            encontrado = posicion;
+        } else
+        {
+            posicion++;
+            leidos = fread(&prod, sizeof(Producto),1,arch);
+        }
+        
+    }
+    
+
+    return encontrado;
 }
 
 // TODO 5 - GENERAR CÓDIGO ÚNICO

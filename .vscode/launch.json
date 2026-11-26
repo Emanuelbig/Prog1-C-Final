@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "f:/Desktop E/UTN INSPT/Programacion 1/Prog1-C-Final/tp final programacion 1",
-      "program": "f:/Desktop E/UTN INSPT/Programacion 1/Prog1-C-Final/tp final programacion 1/build/Debug/outDebug",
+      "cwd": "f:/Desktop E/UTN INSPT/Programacion 1/Prog1-C-Final/other",
+      "program": "f:/Desktop E/UTN INSPT/Programacion 1/Prog1-C-Final/other/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
